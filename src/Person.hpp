@@ -19,15 +19,16 @@ class Person {
 public :
     Person();
     Person(const string& iName,const string& iPhone, float iExpenses);
+    Person(const string& iName,const string& iPhone, float iExpenses,const Group* iLink);
 
     void setName(const string& iName);
-    void setLink(Group* iLink);
+    void setLink(const Group* iLink);
     void setPhone(const string& iPhone);
     void setExpenses(float iExpenses);
     void setPayback(float iPayback);
 
     const string& getName();
-    Group* getLink();
+    const Group* getLink();
     const string& getPhone();
     float getExpenses() const;
     float getPayback();
@@ -41,7 +42,7 @@ private :
     string _phone;
     float _expenses;
     float _payback;
-    Group* _link;
+    const Group* _link;
 };
 
 #endif /* PERSON_HPP_ */

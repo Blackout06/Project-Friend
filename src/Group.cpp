@@ -28,7 +28,7 @@ void Group::setNbPers(const int iNbPers){
     _nbPerson = iNbPers;
 }
 
-const string& Group::getName(){
+const string& Group::getName() const{
         return _name;
 }
 

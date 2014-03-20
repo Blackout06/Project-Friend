@@ -23,7 +23,7 @@ public :
         void setName(const string& iNameg);
         void setNbPers(const int iNbPers);
 
-        const string&  getName();
+        const string&  getName() const;
         const int getNbPers();
 
         float totalExpenses() const;

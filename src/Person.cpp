@@ -23,11 +23,20 @@ Person::Person(const string& iName,const string& iPhone,float iExpenses) :
 {
 }
 
+Person::Person(const string& iName,const string& iPhone,float iExpenses,const Group* iLink) :
+                _name(iName),
+                _phone(iPhone),
+                _expenses(iExpenses),
+                _payback(0),
+                _link(iLink)
+{
+}
+
 void Person::setName(const string& iName){
         _name = iName;
 }
 
-void Person::setLink(Group* iLink){
+void Person::setLink(const Group* iLink){
         _link = iLink;
 }
 
@@ -47,7 +56,7 @@ const string& Person::getName(){
         return _name;
 }
 
-Group* Person::getLink(){
+const Group* Person::getLink(){
         return _link;
 }
 

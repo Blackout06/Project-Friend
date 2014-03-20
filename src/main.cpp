@@ -22,15 +22,15 @@ using namespace std;
 int main(int argc, char **argv) {
 
 
-    if(!argv[1]){ // Il n'y a pas eu d'argument lors de l'appel du programme
-        cout << "Veuillez indiquer le nom du fichier � ouvrir";
+    /*if(!argv[1]){ // Il n'y a pas eu d'argument lors de l'appel du programme
+        cout << "Veuillez indiquer le nom du fichier a ouvrir";
         cin.get() ;
         return 1;
-    }
+    }*/
 
-    ifstream filecsv(argv[1]); // ouverture du fichier
+    ifstream filecsv("/home/charles/workspace/Friends-expenses-file/Debug/file.csv"); // ouverture du fichier
 
-    if (!filecsv){ // Le fichier demand� n'est pas trouv�
+    if (!filecsv){ // Le fichier demande n'est pas trouve
         cout << "Ouverture du fichier impossible";
         cin.get() ;
         return 2;
@@ -39,18 +39,18 @@ int main(int argc, char **argv) {
     string temp,line;
     vector <string> tableau;
 
-    getline(filecsv, line); // r�cupere la 1ere ligne du fichier
+    getline(filecsv, line); // recupere la 1ere ligne du fichier
 
     stringstream ss(line);
 
-    while(getline(ss, temp, ',')){ // d�compose les dif�rente cases de la ligne
+    while(getline(ss, temp, ',')){ // decompose les diferente cases de la ligne
           tableau.push_back(temp);
     }
 
     int aname,aphone,aexpense,agname;
     int i=0;
 
-    for (vector<string>::iterator it = tableau.begin() ; it != tableau.end(); ++it)// Je vérifie l'ordre des éléments
+    for (vector<string>::iterator it = tableau.begin() ; it != tableau.end(); ++it)// Je verifie l'ordre des éléments
             {
 
     	if (it->compare("Name") == 0){
@@ -71,14 +71,14 @@ int main(int argc, char **argv) {
 
 
 
-    vector<Group> Groups; // cr�ation du groupe de groupes
+    vector<Group> Groups; // creation du groupe de groupes
 
 
     while (1){ // tant que mon fichier .csv n'est pas fini
 
         vector <string> person; // stock les infos de la personne
 
-        getline(filecsv, line); // r�cupere une ligne du fichier
+        getline(filecsv, line); // recupere une ligne du fichier
 
         stringstream ss(line);
 
@@ -87,24 +87,24 @@ int main(int argc, char **argv) {
                  break;
             }
 
-        while(getline(ss, temp, ',')){ // d�compose les dif�rente cases de la ligne
+        while(getline(ss, temp, ',')){ // decompose les diferente cases de la ligne
               person.push_back(temp);
               }
 
 
-        float expen = atof((char*)person[aexpense].c_str()); // string to float pour les d�penses
+        float expen = atof((char*)person[aexpense].c_str()); // string to float pour les depenses
 
-        Person aPerson(person[aname],person[aphone],expen); // cr�ation de ma personne
+
 
 
         bool GroupEx = 0;
 
-        for (vector<Group>::iterator it = Groups.begin() ; it != Groups.end(); ++it)// Je test si mon groupe existe d�j�
+        for (vector<Group>::iterator it = Groups.begin() ; it != Groups.end(); ++it)// Je test si mon groupe existe deja
         {
             if(person[agname].compare(it->getName()) == 0){ // Est ce que le nom du groupe correspond
 
                 GroupEx = 1;
-                //aPerson.setLink();
+                Person aPerson(person[aname],person[aphone],expen,&*it); // creation de ma personne
                 it->push_back(aPerson);
                 it->setNbPers(((it->getNbPers()) + 1));
                 break;
@@ -114,10 +114,11 @@ int main(int argc, char **argv) {
 
         if (!GroupEx){ // Si le groupe n'existait pas
 
-            Group aGroup(person[agname]); // On cr�ait le nouveau groupe
+        	Person aPerson(person[aname],person[aphone],expen);
+            Group aGroup(person[agname]); // On creait le nouveau groupe
             aGroup.push_back(aPerson); // On y insert la personne
-            aGroup[0].setLink(&aGroup); // On ajoute le pointeur du groupe qu'on a cr��
-            Groups.push_back(aGroup); // On ajoute notre groupe � notre vecteur de groupe
+            aGroup[0].setLink(&aGroup); // On ajoute le pointeur du groupe qu'on a cree
+            Groups.push_back(aGroup); // On ajoute notre groupe a notre vecteur de groupe
         }
 
 
@@ -155,8 +156,8 @@ int main(int argc, char **argv) {
                                 // display the values
                                 cout << tmpGroup[i].getName() << "\t\t" << tmpGroup[i].getPhone()
                                         << "\t\t" << tmpGroup[i].getExpenses() << "\t\t"
-                                        << fixed << setprecision (2) << tmpGroup[i].getPayback() << fixed << setprecision (0) << "\t\t" << tmpGroup.getName() << endl;//tmpGroup[i].getLink()->getName() << endl;
-                        }
+                                        << fixed << setprecision (2) << tmpGroup[i].getPayback() << "\t\t" << tmpGroup[i].getLink()->getName() << endl<< fixed << setprecision (0);
+                        } //tmpGroup.getName() << endl;//
                         cout << endl;
 
     }
